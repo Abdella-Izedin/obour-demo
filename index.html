@@ -7,132 +7,94 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
   :root{
-    --primary:#0f4c81;
-    --primary-dark:#0a3560;
-    --accent:#10b981;
-    --accent-soft:#d1fae5;
-    --bg-1:#f0f5fb;
-    --bg-2:#e2ecf7;
-    --ink:#12263f;
-    --muted:#64748b;
-    --line:#cbd8e8;
-    --white:#ffffff;
-    --danger:#ef4444;
-    --shadow:0 20px 45px -20px rgba(15,76,129,.35);
+    --primary:#0f4c81;--primary-dark:#0a3560;--accent:#10b981;--accent-soft:#d1fae5;
+    --bg-1:#f0f5fb;--bg-2:#e2ecf7;--ink:#12263f;--muted:#64748b;--line:#cbd8e8;
+    --white:#fff;--danger:#ef4444;--shadow:0 20px 45px -20px rgba(15,76,129,.35);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    font-family:'Tajawal',system-ui,sans-serif;
-    color:var(--ink);
-    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));
-    min-height:100vh;
-    display:flex;align-items:center;justify-content:center;
-    padding:24px;
-  }
-  .card{
-    width:100%;max-width:560px;
-    background:var(--white);
-    border-radius:24px;
-    box-shadow:var(--shadow);
-    padding:40px 34px;
-  }
-  .brand{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:8px}
-  .brand-badge{
-    width:46px;height:46px;border-radius:14px;
-    background:linear-gradient(135deg,var(--primary),#1c6fb8);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 8px 18px -8px rgba(15,76,129,.6);
-  }
+  body{font-family:'Tajawal',system-ui,sans-serif;color:var(--ink);
+    background:linear-gradient(160deg,var(--bg-1),var(--bg-2));min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{width:100%;max-width:580px;background:var(--white);border-radius:24px;
+    box-shadow:var(--shadow);padding:38px 32px}
+  .brand{display:flex;align-items:center;gap:12px;justify-content:center}
+  .brand-badge{width:46px;height:46px;border-radius:14px;
+    background:linear-gradient(135deg,var(--primary),#1c6fb8);display:flex;
+    align-items:center;justify-content:center;box-shadow:0 8px 18px -8px rgba(15,76,129,.6)}
   .brand-badge svg{width:26px;height:26px;fill:#fff}
   .brand-name{font-weight:800;font-size:1.15rem;color:var(--primary)}
   h1{font-size:1.5rem;font-weight:800;text-align:center;margin-top:14px}
-  .sub{text-align:center;color:var(--muted);font-size:.98rem;margin:8px 0 28px;line-height:1.7}
+  .sub{text-align:center;color:var(--muted);font-size:.98rem;margin:8px 0 26px;line-height:1.7}
 
-  .dropzone{
-    position:relative;
-    border:2px dashed var(--line);
-    border-radius:18px;
-    background:#f8fbff;
-    padding:44px 20px;
-    text-align:center;
-    cursor:pointer;
-    transition:all .25s ease;
-  }
+  .dropzone{position:relative;border:2px dashed var(--line);border-radius:18px;
+    background:#f8fbff;padding:42px 20px;text-align:center;cursor:pointer;transition:all .25s}
   .dropzone:hover{border-color:var(--primary);background:#f2f8ff}
-  .dropzone.dragover{
-    border-color:var(--accent);
-    background:var(--accent-soft);
-    transform:scale(1.01);
-  }
-  .dz-icon{
-    width:66px;height:66px;margin:0 auto 16px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#e8f1fb,#d6e8fa);
-    display:flex;align-items:center;justify-content:center;
-    transition:all .25s ease;
-  }
-  .dropzone.dragover .dz-icon{background:#fff}
-  .dz-icon svg{width:32px;height:32px;fill:var(--primary)}
-  .dz-title{font-weight:700;font-size:1.08rem}
-  .dz-hint{color:var(--muted);font-size:.9rem;margin-top:6px}
-  .dz-or{
-    display:inline-block;margin-top:14px;
-    background:var(--primary);color:#fff;
-    padding:9px 22px;border-radius:10px;
-    font-weight:700;font-size:.92rem;
-    transition:background .2s;
-  }
+  .dropzone.dragover{border-color:var(--accent);background:var(--accent-soft);transform:scale(1.01)}
+  .dz-icon{width:64px;height:64px;margin:0 auto 15px;border-radius:50%;
+    background:linear-gradient(135deg,#e8f1fb,#d6e8fa);display:flex;align-items:center;justify-content:center}
+  .dz-icon svg{width:31px;height:31px;fill:var(--primary)}
+  .dz-title{font-weight:700;font-size:1.05rem}
+  .dz-hint{color:var(--muted);font-size:.88rem;margin-top:6px}
+  .dz-or{display:inline-block;margin-top:14px;background:var(--primary);color:#fff;
+    padding:9px 22px;border-radius:10px;font-weight:700;font-size:.9rem}
   .dropzone:hover .dz-or{background:var(--primary-dark)}
 
-  .file-card{
-    display:none;align-items:center;gap:14px;
-    margin-top:18px;padding:16px 18px;
-    border:1px solid var(--line);
-    border-radius:16px;
-    background:linear-gradient(180deg,#fff,#f8fbff);
-    animation:pop .3s ease;
-  }
+  .file-card{display:none;align-items:center;gap:14px;margin-top:18px;padding:15px 17px;
+    border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#fff,#f8fbff);animation:pop .3s}
   .file-card.show{display:flex}
   @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  .file-type{
-    flex-shrink:0;width:50px;height:58px;border-radius:9px;
-    background:linear-gradient(135deg,#ef4444,#dc2626);
-    color:#fff;font-weight:800;font-size:.72rem;
-    display:flex;align-items:flex-end;justify-content:center;
-    padding-bottom:8px;position:relative;
-    box-shadow:0 8px 16px -8px rgba(220,38,38,.6);
-  }
-  .file-type::before{
-    content:"";position:absolute;top:0;left:0;
-    border-width:0 0 14px 14px;border-style:solid;
-    border-color:transparent transparent transparent rgba(0,0,0,.15);
-  }
+  .file-type{flex-shrink:0;width:48px;height:56px;border-radius:9px;
+    background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;font-weight:800;font-size:.7rem;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;
+    box-shadow:0 8px 16px -8px rgba(220,38,38,.6)}
   .file-meta{flex:1;min-width:0;text-align:right}
-  .file-name{font-weight:700;font-size:1rem;word-break:break-word;line-height:1.4}
-  .file-size{color:var(--muted);font-size:.85rem;margin-top:3px}
-  .remove-btn{
-    flex-shrink:0;width:34px;height:34px;border:none;cursor:pointer;
-    border-radius:9px;background:#fee2e2;color:var(--danger);
-    font-size:1.3rem;line-height:1;transition:all .2s;
-  }
+  .file-name{font-weight:700;font-size:.98rem;word-break:break-word;line-height:1.4}
+  .file-size{color:var(--muted);font-size:.83rem;margin-top:3px}
+  .remove-btn{flex-shrink:0;width:34px;height:34px;border:none;cursor:pointer;border-radius:9px;
+    background:#fee2e2;color:var(--danger);font-size:1.3rem;line-height:1;transition:all .2s}
   .remove-btn:hover{background:var(--danger);color:#fff}
 
-  .extract{
-    display:none;margin-top:18px;padding:18px;
-    border-radius:16px;background:#f1f7fd;border:1px dashed var(--line);
-    animation:pop .35s ease;
-  }
-  .extract.show{display:block}
-  .extract-head{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--primary)}
-  .extract-head .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
-  .extract-body{color:var(--muted);font-size:.92rem;margin-top:10px;line-height:1.7}
-  .chip{display:inline-block;background:#fff;border:1px solid var(--line);color:var(--muted);
-    padding:5px 12px;border-radius:20px;font-size:.82rem;margin:4px 4px 0 0}
+  .panel{display:none;margin-top:16px;padding:18px;border-radius:16px;
+    background:#f1f7fd;border:1px solid var(--line);animation:pop .35s}
+  .panel.show{display:block}
+  .panel-head{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--primary);font-size:1.02rem}
+  .panel-head .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .pages-badge{margin-inline-start:auto;background:#fff;border:1px solid var(--line);
+    color:var(--muted);font-size:.8rem;padding:3px 11px;border-radius:20px;font-weight:500}
 
-  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:26px}
+  .canvas-box{margin-top:14px;border:1px solid var(--line);border-radius:12px;
+    overflow:hidden;background:#fff;text-align:center;padding:10px}
+  canvas{max-width:100%;height:auto;border-radius:6px;box-shadow:0 6px 18px -10px rgba(0,0,0,.3)}
+
+  .fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .field{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 13px}
+  .field-label{font-size:.76rem;color:var(--muted)}
+  .field-value{font-weight:700;margin-top:3px;word-break:break-word;font-size:.95rem}
+  .field-value.empty{color:#c2ccd9;font-weight:500}
+
+  .snippet-toggle{margin-top:12px;font-size:.85rem;color:var(--primary);cursor:pointer;
+    font-weight:700;user-select:none;display:inline-flex;align-items:center;gap:5px}
+  .snippet{display:none;margin-top:8px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:12px;font-size:.83rem;color:var(--muted);line-height:1.8;
+    max-height:150px;overflow:auto;white-space:pre-wrap}
+  .snippet.show{display:block}
+
+  .loading{display:none;margin-top:16px;text-align:center;color:var(--muted);font-size:.92rem}
+  .loading.show{display:block}
+  .spinner{width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--primary);
+    border-radius:50%;margin:0 auto 10px;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .note{display:none;margin-top:14px;font-size:.86rem;color:var(--muted);text-align:center;
+    background:#fff8e6;border:1px solid #fde68a;border-radius:12px;padding:11px}
+  .note.show{display:block}
+
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:24px}
   footer b{color:var(--primary)}
+  @media(max-width:480px){.fields-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -143,11 +105,10 @@
       </div>
       <span class="brand-name">عُبور</span>
     </div>
-
     <h1>رفع بيانات السائقين</h1>
-    <p class="sub">اسحب ملف بيانات السائقين (PDF) وأفلته هنا لبدء عملية الحجز الآلي في المنافذ البرية</p>
+    <p class="sub">اسحب ملف بيانات السائقين (PDF) وأفلته هنا — يقرأه النظام ويستخرج التفاصيل تلقائياً</p>
 
-    <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="منطقة رفع الملف">
+    <div class="dropzone" id="dropzone" role="button" tabindex="0">
       <input type="file" id="fileInput" accept=".pdf,application/pdf,image/*" hidden>
       <div class="dz-icon">
         <svg viewBox="0 0 24 24"><path d="M12 3a1 1 0 0 1 .7.3l4 4a1 1 0 0 1-1.4 1.4L13 6.4V15a1 1 0 1 1-2 0V6.4L8.7 8.7a1 1 0 0 1-1.4-1.4l4-4A1 1 0 0 1 12 3ZM5 15a1 1 0 0 1 1 1v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2a1 1 0 1 1 2 0v2a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-2a1 1 0 0 1 1-1Z"/></svg>
@@ -163,73 +124,120 @@
         <div class="file-name" id="fileName"></div>
         <div class="file-size" id="fileSize"></div>
       </div>
-      <button class="remove-btn" id="removeBtn" aria-label="إزالة">&times;</button>
+      <button class="remove-btn" id="removeBtn">&times;</button>
     </div>
 
-    <div class="extract" id="extract">
-      <div class="extract-head"><span class="dot"></span> بيانات السائق المستخرجة</div>
-      <div class="extract-body">
-        الخطوة التالية: استخراج التفاصيل تلقائياً من الملف.
-        <div>
-          <span class="chip">اسم السائق</span>
-          <span class="chip">رقم الهوية</span>
-          <span class="chip">رقم اللوحة</span>
-          <span class="chip">المعبر</span>
-        </div>
-      </div>
+    <div class="loading" id="loading"><div class="spinner"></div>جاري قراءة الملف واستخراج البيانات…</div>
+
+    <div class="panel" id="previewPanel">
+      <div class="panel-head"><span class="dot"></span> معاينة المستند <span class="pages-badge" id="pagesBadge"></span></div>
+      <div class="canvas-box"><canvas id="pdfCanvas"></canvas></div>
     </div>
+
+    <div class="panel" id="dataPanel">
+      <div class="panel-head"><span class="dot"></span> بيانات السائق المستخرجة</div>
+      <div class="fields-grid">
+        <div class="field"><div class="field-label">اسم السائق</div><div class="field-value empty" id="f-name">—</div></div>
+        <div class="field"><div class="field-label">رقم الهوية</div><div class="field-value empty" id="f-id">—</div></div>
+        <div class="field"><div class="field-label">رقم اللوحة</div><div class="field-value empty" id="f-plate">—</div></div>
+        <div class="field"><div class="field-label">المعبر</div><div class="field-value empty" id="f-port">—</div></div>
+      </div>
+      <div class="snippet-toggle" id="snippetToggle">▾ عرض النص المقروء من الملف</div>
+      <div class="snippet" id="snippet"></div>
+    </div>
+
+    <div class="note" id="note">هذا الملف ليس PDF — المعاينة والاستخراج التلقائي متاحة لملفات PDF.</div>
 
     <footer>مدعوم بـ <b>الحجز الآلي</b> — منصة عُبور</footer>
   </div>
 
 <script>
-  const dropzone = document.getElementById('dropzone');
-  const fileInput = document.getElementById('fileInput');
-  const fileCard = document.getElementById('fileCard');
-  const fileName = document.getElementById('fileName');
-  const fileSize = document.getElementById('fileSize');
-  const fileType = document.getElementById('fileType');
-  const removeBtn = document.getElementById('removeBtn');
-  const extract = document.getElementById('extract');
+  const $ = id => document.getElementById(id);
+  const dropzone=$('dropzone'), fileInput=$('fileInput'), fileCard=$('fileCard'),
+    fileName=$('fileName'), fileSize=$('fileSize'), fileType=$('fileType'), removeBtn=$('removeBtn'),
+    loading=$('loading'), previewPanel=$('previewPanel'), dataPanel=$('dataPanel'),
+    pagesBadge=$('pagesBadge'), note=$('note'), snippet=$('snippet'), snippetToggle=$('snippetToggle');
 
-  function fmtSize(bytes){
-    if(bytes < 1024) return bytes + ' بايت';
-    if(bytes < 1048576) return (bytes/1024).toFixed(1) + ' كيلوبايت';
-    return (bytes/1048576).toFixed(1) + ' ميجابايت';
+  if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const fmtSize=b=>b<1024?b+' بايت':b<1048576?(b/1024).toFixed(1)+' كيلوبايت':(b/1048576).toFixed(1)+' ميجابايت';
+
+  function reset(){
+    fileInput.value='';
+    [fileCard,previewPanel,dataPanel,loading,note,snippet].forEach(el=>el.classList.remove('show'));
+    dropzone.style.display='block';
+    ['f-name','f-id','f-plate','f-port'].forEach(id=>{$(id).textContent='—';$(id).classList.add('empty');});
+  }
+
+  function setField(id,val){
+    if(val){$(id).textContent=val.trim();$(id).classList.remove('empty');}
+  }
+
+  // لقط الحقول من النص (محاولة بسيطة — المستوى ٢)
+  function extractFields(text){
+    const t=text.replace(/\s+/g,' ');
+    const grab=(labels,pattern)=>{
+      for(const l of labels){
+        const re=new RegExp(l+'\\s*[:：\\-]?\\s*('+pattern+')','i');
+        const m=t.match(re); if(m&&m[1]) return m[1].trim();
+      } return '';
+    };
+    setField('f-name', grab(['اسم السائق','اسم','السائق','driver name','name'],'[\\u0600-\\u06FF A-Za-z]{3,40}'));
+    setField('f-id',   grab(['رقم الهوية','الهوية','الإقامة','هوية','id','iqama'],'\\d{7,12}'));
+    setField('f-plate',grab(['رقم اللوحة','اللوحة','plate'],'[\\u0600-\\u06FF A-Za-z0-9]{3,15}'));
+    setField('f-port', grab(['المعبر','المنفذ','port','crossing'],'[\\u0600-\\u06FF A-Za-z]{2,25}'));
+  }
+
+  async function handlePdf(file){
+    loading.classList.add('show');
+    try{
+      const buf=await file.arrayBuffer();
+      const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+      pagesBadge.textContent=pdf.numPages+' صفحة';
+      // معاينة الصفحة الأولى
+      const page=await pdf.getPage(1);
+      const canvas=$('pdfCanvas'), ctx=canvas.getContext('2d');
+      const vp=page.getViewport({scale:1.3});
+      canvas.width=vp.width; canvas.height=vp.height;
+      await page.render({canvasContext:ctx,viewport:vp}).promise;
+      // قراءة النص من كل الصفحات
+      let full='';
+      for(let i=1;i<=pdf.numPages;i++){
+        const p=await pdf.getPage(i);
+        const tc=await p.getTextContent();
+        full+=tc.items.map(it=>it.str).join(' ')+'\n';
+      }
+      snippet.textContent=full.trim().slice(0,1200)||'(لا يوجد نص قابل للقراءة — قد يكون الملف صورة ممسوحة)';
+      extractFields(full);
+      loading.classList.remove('show');
+      previewPanel.classList.add('show');
+      dataPanel.classList.add('show');
+    }catch(e){
+      loading.classList.remove('show');
+      snippet.textContent='تعذّر قراءة الملف: '+e.message;
+      dataPanel.classList.add('show');
+    }
   }
 
   function showFile(file){
-    fileName.textContent = file.name;            // ← اسم الملف تلقائياً
-    fileSize.textContent = fmtSize(file.size);
-    const ext = (file.name.split('.').pop() || 'FILE').toUpperCase();
-    fileType.textContent = ext.slice(0,4);
+    fileName.textContent=file.name;
+    fileSize.textContent=fmtSize(file.size);
+    fileType.textContent=(file.name.split('.').pop()||'FILE').toUpperCase().slice(0,4);
     fileCard.classList.add('show');
-    extract.classList.add('show');
-    dropzone.style.display = 'none';
+    dropzone.style.display='none';
+    const isPdf=/pdf$/i.test(file.name)||file.type==='application/pdf';
+    if(isPdf && window.pdfjsLib){ handlePdf(file); }
+    else { note.classList.add('show'); }
   }
 
-  function reset(){
-    fileInput.value = '';
-    fileCard.classList.remove('show');
-    extract.classList.remove('show');
-    dropzone.style.display = 'block';
-  }
-
-  // فتح نافذة الاختيار (يدعم الجوال)
-  dropzone.addEventListener('click', () => fileInput.click());
-  dropzone.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') fileInput.click(); });
-  fileInput.addEventListener('change', e => { if(e.target.files.length) showFile(e.target.files[0]); });
-
-  // السحب والإفلات
-  ['dragenter','dragover'].forEach(ev =>
-    dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.add('dragover'); }));
-  ['dragleave','drop'].forEach(ev =>
-    dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
-  dropzone.addEventListener('drop', e => {
-    if(e.dataTransfer.files.length) showFile(e.dataTransfer.files[0]);
-  });
-
-  removeBtn.addEventListener('click', reset);
+  dropzone.addEventListener('click',()=>fileInput.click());
+  dropzone.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')fileInput.click();});
+  fileInput.addEventListener('change',e=>{if(e.target.files.length)showFile(e.target.files[0]);});
+  ['dragenter','dragover'].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.add('dragover');}));
+  ['dragleave','drop'].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.remove('dragover');}));
+  dropzone.addEventListener('drop',e=>{if(e.dataTransfer.files.length)showFile(e.dataTransfer.files[0]);});
+  removeBtn.addEventListener('click',reset);
+  snippetToggle.addEventListener('click',()=>snippet.classList.toggle('show'));
 </script>
 </body>
 </html>
